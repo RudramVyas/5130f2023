@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rudram Vyas</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+
+        <h1 >Rudram Vyas</h1>
+        <table>
+            <tr>
+                <td rowspan="3">
+                        <img src="pic.png">
+                </td>
+                <td>
+                    <section>
+                        <h2>About Me</h2>
+                        <p>Hello, I am Rudram Vyas. I am a student pursuing MS in Computer Science at UMass Lowell. Welcome to my page.</p>
+                        <button id="portfolio">
+                            <a> My Portfolio </a>
+                        </button>
+                        <button id="resume">
+                            <a> My Resume </a>
+                        </button>
+                        <p>
+                            Tell me someting about you: 
+                        </p>
+                        <button id="form">
+                            <a> Form </a>
+                        </button>
+                        <button id="db">
+                            <a> Database </a>
+                        </button>
+                    </section>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <section>
+                        <h2>My Hobbies</h2>
+                        <ul>
+                            <li>Hiking</li>
+                            <li>Casual Gaming</li>
+                            <li>Building Computer</li>
+                            <li>Photography</li>
+                        </ul>
+                    </section>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <section>
+                        <h2>Contact Information</h2>
+                        <p>Email: rudram.vyas@gmail.com</p>
+                        <p>Phone: (978) 375-8413</p>
+                        <button id="mail">
+                            <a> Email Me </a>
+                        </button>
+                    </section>
+                </td>
+            </tr>
+        </table> 
+
+    </body>
+    <script type="text/javascript">
+        document.getElementById("portfolio").onclick = function(event) {
+            event.preventDefault();
+            window.open("portfolio.html", "_blank");
+        };
+
+        document.getElementById("resume").onclick = function(event) {
+            event.preventDefault();
+            window.open("resume.pdf", "_blank");
+        };
+
+        document.getElementById("form").onclick = function(event) {
+            event.preventDefault();
+            window.open("form.html", "_blank");
+        };
+
+        document.getElementById("db").onclick = function(event) {
+            event.preventDefault();
+            window.open("https://docs.google.com/spreadsheets/d/1FCsHYC-xohTFGVmcLCs4aXDoo-9lklSaeWmMo8pFXDQ/edit?usp=sharing", "_blank");
+        };
+
+        document.getElementById("mail").onclick = function(event) {
+            event.preventDefault();
+            window.open("mailto:rudram.vyas@gmail.com", "_blank");
+        };
+    </script>
+</html>

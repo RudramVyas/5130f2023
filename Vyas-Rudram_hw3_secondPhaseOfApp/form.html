@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form</title>
+	<link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+	<h1>Your Information</h1>
+	<form method="post" action="" name="contact-form" enctype="multipart/form-data">
+
+		<table border="0" align="center">
+			<!-- <td class="tableh" colspan="2"><h2 align="center">About you</h2></td> -->
+			
+			<tr>	
+				<td class="tableinfo">First Name : </td>	
+				<td class="tabledata"><input required type="text" name="firstName"></td>
+			</tr>
+			
+			<tr>	
+				<td class="tableinfo">Last Name : </td>	
+				<td class="tabledata"><input required type="text" name="lastName" ></td>
+			</tr>		
+			
+			<tr>	
+				<td class="tableinfo">Date of Birth : </td>
+				<td class="tabledata"><input required type="Date"  name="dob"></td>
+			</tr>	
+			
+			<tr>	
+				<td class="tableinfo">Email ID : </td>
+				<td class="tabledata"><input required type="text" name="email"></td>
+			</tr>
+			
+			<tr>	
+				<td class="tableinfo">Phone No : </td>
+				<td class="tabledata"><input type="number" name="phone"></td>
+			</tr>
+			
+			<tr>	
+				<td class="tableinfo">Current City : </td>
+				<td class="tabledata"><input required type="text" name="cityCurrent"></td>
+			</tr>
+			
+			<tr>	
+				<td class="tableinfo">Hometown : </td>
+				<td class="tabledata"><input type="text" name="hometown"></td>
+			</tr>
+			
+			<tr>	
+				<td class="tableinfo">Dream city to live : </td>
+				<td class="tabledata"><input type="text" name="dreamCity"></td>
+			</tr>
+
+			<tr>	
+				<td class="tableinfo">Country last Visited : </td>
+				<td class="tabledata"><input type="text" name="countryVisited"></td>
+			</tr>
+			
+			<tr>	
+				<td class="tableinfo">What sports do play : </td>
+				<td class="tabledata"><input type="text" name="sports"></td>
+			</tr>
+
+			<tr>	
+				<td class="tableinfo">Which phone do you use? </td>
+				<td class="tabledata">
+					<select id="phoneBrand" name="phoneBrand">
+						<option selected value="iPhone">iPhone</option>
+						<option value="Samsung">Samsung</option>
+						<option value="Oppo/Oneplus">Oneplus/Oppo</option>
+						<option value="Other">Other</option>
+				  	</select>
+				</td>
+			</tr>
+
+			<tr>	
+				<td class="tableinfo">Gender : </td>	
+				<td class="tabledata">
+					<input type="radio" name="gender" value="Male" id="male">Male<br>
+					<input type="radio" name="gender" value="Female" id="female">Female<br>
+					<input type="radio" name="gender" value="Other" id="other">Other<br>
+				</td>			
+			</tr>	
+			
+			<tr>
+				<td class="tableinfo">Hobby :</td>
+				<td class="tabledata">
+					<input type="checkbox" >Music
+					<br><input type="checkbox" name="hobbies" value="Dance">Dance
+					<br><input type="checkbox" name="hobbies" value="Gaming">Gaming
+					<br><input type="checkbox" name="hobbies" value="Hiking">Hiking
+					<br><input type="checkbox" name="hobbies" value="Rock Climbing">Rock Climbing
+					<br><input type="checkbox" name="hobbies" value="Biking">Biking
+				</td>
+			</tr>
+		</form>
+			
+			<tr>	
+			<td class="tableh" colspan="2"><center><input class="button" type="submit" value="Submit"></center></td>
+		</tr>
+	</table>
+</body>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx141rG86WzFetUzJOrNL2vHJc3StP66XykMvpWZnRbvn6mgZXibcATP1TTbXmZDM4A/exec'
+
+    const form = document.forms['contact-form']
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+
+		const formData = new FormData(form);
+        const selectedHobbies = [];
+        // const selectedCuisines = [];
+
+        for (const pair of formData.entries()) {
+            if (pair[0] === "hobbies") {
+                selectedHobbies.push(pair[1]);
+            }
+        }
+        
+        const hobbiesString = selectedHobbies.join(", ");
+        
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "hobby";
+        hiddenInput.value = hobbiesString;
+
+        form.appendChild(hiddenInput);
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: new FormData(form)
+        })
+            .then(response => alert("Thank you! Your form is submitted successfully."))
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(error => console.error('Error!', error.message))
+    })
+</script>
+
+</html>
+
+<!-- 
+	API Link:
+	https://script.google.com/macros/s/AKfycbwz2HYxsKJp6mnWO7Qea7ojo1EsPjjn2ZKHUFAnQfbYTWpFXxIWpU225C2r4UnR1lZy/exec
+
+ -->
