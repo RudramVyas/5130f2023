@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #validation-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="button"] {
+            background-color: #ccc;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="button"]:hover {
+            background-color: #999;
+        }
+    </style> 
+
+
+</head>
+<body>
+    <form onsubmit="return validateForm()" id="validation-form">
+        <h1>Rudram Vyas<br>Form Validation</h1>
+        <label for="email">Email Address:</label>
+        <input type="text" id="email" name="email" required>
+        
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="url">Website URL:</label>
+        <input type="text" id="url" name="url" required>
+        
+        <input type="submit" value="Submit">
+        <button type="button" onclick="clearForm()">Clear</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            var emailInput = document.getElementById('email');
+            var phoneInput = document.getElementById('phone');
+            var urlInput = document.getElementById('url');
+
+            var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i;
+            var phoneRegex = /^(\(\d{3}\)|\d{3})[-. ]?\d{3}[-. ]?\d{4}$/;
+            var urlRegex = /^(https?:\/\/)?([A-Za-z0-9-]+\.)+[A-Za-z]{2,6}([A-Za-z0-9/?=&%#-_.]*)?$/;
+
+            var isEmailValid = emailRegex.test(emailInput.value);
+            var isPhoneValid = phoneRegex.test(phoneInput.value);
+            var isUrlValid = urlRegex.test(urlInput.value);
+
+            if (!isEmailValid) {
+                alert('Please enter a valid email address.');
+                emailInput.focus();
+                return false;
+            }
+
+            if (!isPhoneValid) {
+                alert('Please enter a valid US phone number.');
+                phoneInput.focus();
+                return false;
+            }
+
+            if (!isUrlValid) {
+                alert('Please enter a valid URL.');
+                urlInput.focus();
+                return false;
+            }else{
+                alert('All fields are valid');
+                clearForm();
+                return true;
+            }
+        }
+        function clearForm() {
+            document.getElementById('validation-form').reset();
+        }
+    </script>
+</body>
+</html>
