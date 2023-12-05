@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #loginCountDisplay,
+        #locationDisplay,
+        #weatherInfo {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loginCountDisplay"></div>
+    <div id="locationDisplay"></div>
+    <div id="weatherInfo"></div>
+
+    <script>
+        window.onload = getLocation;
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showLocationAndWeather, handleLocationError);
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginCount = urlParams.get('logincount');
+            const loginCountDisplay = document.getElementById('loginCountDisplay');
+            loginCountDisplay.textContent = `Number of Logins: ${loginCount}`;
+        }
+
+        function showLocationAndWeather(position) {
+            const openCageApiKey = 'a6f4caf70df74326bbd14fe3f890326f';
+            const openCageApiUrl = 'https://api.opencagedata.com/geocode/v1/json';
+
+            const apiKey = 'bd5e378503939ddaee76f12ad7a97608';
+            const weatherApiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            fetch(`${openCageApiUrl}?q=${latitude}+${longitude}&key=${openCageApiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const city = data.results[0].components.city;
+                    const state = data.results[0].components.state;
+                    const country = data.results[0].components.country;
+
+                    const locationInfo = document.getElementById('locationDisplay');
+                    locationInfo.innerHTML = `<h2>Location Information</h2>
+                              <p>City: ${city}</p>
+                              <p>State: ${state}</p>
+                              <p>Country: ${country}</p>`;
+                })
+                .catch(error => console.error('Error fetching location data:', error));
+
+            fetch(`${weatherApiUrl}?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`)
+                .then(response => response.json())
+                .then(data => {
+                    const temperature = data.main.temp;
+                    const description = data.weather[0].description;
+
+                    const weatherInfo = document.getElementById('weatherInfo');
+                    weatherInfo.innerHTML = `<p>Temperature: ${temperature}°C</p>
+                        <p>Description: ${description}</p>`;
+                })
+                .catch(error => console.error('Error fetching weather data:', error));
+        }
+
+        function handleLocationError(error) {
+            console.error(`Error getting location: ${error.message}`);
+        }
+    </script>
+</body>
+
+</html>
